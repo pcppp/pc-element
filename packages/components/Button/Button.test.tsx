@@ -1,6 +1,5 @@
 import { describe, it, expect, vi, test } from 'vitest';
 import { mount } from '@vue/test-utils';
-
 import Button from './Button.vue';
 import Icon from '../Icon/Icon.vue';
 describe('Button.vue', () => {
@@ -38,7 +37,7 @@ describe('Button.vue', () => {
       const wrapper = mount(Button, {
         props: { [prop]: true },
         global: {
-          stubs: ['ErIcon'],
+          stubs: ['PcIcon'],
         },
       });
       expect(wrapper.classes()).toContain(className);
