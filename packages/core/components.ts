@@ -1,3 +1,3 @@
-import { PcButton } from '@pc-element/components';
+import { PcButton, PcIcon } from '@pc-element/components';
 import type { Plugin } from 'vue';
-export default [PcButton] as Plugin[];
+export default [PcButton, PcIcon] as Plugin[];

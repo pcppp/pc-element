@@ -1,8 +1,8 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, test } from 'vitest';
 import { mount } from '@vue/test-utils';
 
 import Button from './Button.vue';
-
+import Icon from '../Icon/Icon.vue';
 describe('Button.vue', () => {
   // Props: type
   const onClick = vi.fn();
@@ -63,5 +63,67 @@ describe('Button.vue', () => {
     const wrapper = mount(Button, {});
     await wrapper.trigger('click');
     expect(wrapper.emitted().click).toHaveLength(1);
+  });
+
+  it('should display loading icon and not emit click event when button is loading', async () => {
+    const wrapper = mount(Button, {
+      props: { loading: true },
+      global: {
+        stubs: ['PcIcon'],
+      },
+    });
+    const iconElement = wrapper.findComponent(Icon);
+    expect(wrapper.find('.loading-icon').exists()).toBe(true);
+    expect(iconElement.exists()).toBeTruthy();
+    expect(iconElement.attributes('icon')).toBe('spinner');
+    await wrapper.trigger('click');
+    expect(wrapper.emitted('click')).toBeUndefined();
+  });
+  test('loading button', () => {
+    const wrapper = mount(Button, {
+      props: {
+        loading: true,
+      },
+      slots: {
+        default: 'loading button',
+      },
+      global: {
+        stubs: ['PcIcon'],
+      },
+    });
+
+    // class
+    expect(wrapper.classes()).toContain('is-loading');
+
+    // attrs
+    expect(wrapper.attributes('disabled')).toBeDefined();
+    expect(wrapper.find('button').element.disabled).toBeTruthy();
+
+    // events
+    wrapper.get('button').trigger('click');
+    expect(wrapper.emitted()).not.toHaveProperty('click');
+
+    // icon
+    const iconElement = wrapper.findComponent(Icon);
+    expect(iconElement.exists()).toBeTruthy();
+    expect(iconElement.attributes('icon')).toBe('spinner');
+  });
+
+  test('icon button', () => {
+    const wrapper = mount(Button, {
+      props: {
+        icon: 'arrow-up',
+      },
+      slots: {
+        default: 'icon button',
+      },
+      global: {
+        stubs: ['PcIcon'],
+      },
+    });
+
+    const iconElement = wrapper.findComponent(Icon);
+    expect(iconElement.exists()).toBeTruthy();
+    expect(iconElement.attributes('icon')).toBe('arrow-up');
   });
 });

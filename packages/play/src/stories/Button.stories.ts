@@ -1,6 +1,6 @@
 import type { ArgTypes, Meta, StoryObj } from '@storybook/vue3-vite';
 
-import { fn } from 'storybook/test';
+import { fn, within, userEvent, expect } from 'storybook/test';
 import { PcButton } from 'pc-element';
 type Story = StoryObj<typeof PcButton> & { argTypes: ArgTypes };
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories
@@ -74,5 +74,33 @@ export const Default: Story & { args: { content: string } } = {
       `<pc-button v-bind="args">{{args.content}}</pc-button>`
     ),
   }),
+  play: async ({ canvasElement, args, step }) => {
+    const canvas = within(canvasElement);
+    await step('click btn', async () => {
+      await userEvent.click;
+    });
+  },
+};
+export const Circle: Story = {
+  args: {
+    icon: 'search',
+  },
+  render: (args: any) => ({
+    components: { PcButton },
+    setup() {
+      return { args };
+    },
+    template: container(`
+      <pc-button circle v-bind="args"/>
+    `),
+  }),
+  play: async ({ canvasElement, args, step }) => {
+    const canvas = within(canvasElement);
+    await step('click button', async () => {
+      await userEvent.click(canvas.getByRole('button'));
+    });
+
+    expect(args.onClick).toHaveBeenCalled();
+  },
 };
 export default meta;
