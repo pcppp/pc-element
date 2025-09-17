@@ -1,6 +1,6 @@
 {
   "name": "pc-element",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "components library by Vue3 + TypeScript + Vite",
   "type": "module",
   "main": "./dist/umd/index.umd.js",
