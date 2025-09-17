@@ -1,7 +1,7 @@
 import type { ArgTypes, Meta, StoryObj } from '@storybook/vue3-vite';
 
 import { fn, within, userEvent, expect } from 'storybook/test';
-import { PcButton } from 'pc-element';
+import { PcButton, PcButtonGroup } from 'pc-element';
 type Story = StoryObj<typeof PcButton> & { argTypes: ArgTypes };
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories
 const meta: Meta<typeof PcButton> = {
@@ -100,6 +100,56 @@ export const Circle: Story = {
       await userEvent.click(canvas.getByRole('button'));
     });
 
+    expect(args.onClick).toHaveBeenCalled();
+  },
+};
+export const Group: Story & { args: { content1: string; content2: string } } = {
+  argTypes: {
+    groupType: {
+      control: { type: 'select' },
+      options: ['primary', 'success', 'warning', 'danger', 'info', ''],
+    },
+    groupSize: {
+      control: { type: 'select' },
+      options: ['large', 'default', 'small', ''],
+    },
+    groupDisabled: {
+      control: 'boolean',
+    },
+    content1: {
+      control: { type: 'text' },
+      defaultValue: 'Button1',
+    },
+    content2: {
+      control: { type: 'text' },
+      defaultValue: 'Button2',
+    },
+  },
+  args: {
+    round: true,
+    content1: 'Button1',
+    content2: 'Button2',
+  },
+  render: (args) => ({
+    components: { PcButton, PcButtonGroup },
+    setup() {
+      return { args };
+    },
+    template: container(`
+       <pc-button-group :type="args.groupType" :size="args.groupSize" :disabled="args.groupDisabled">
+         <pc-button v-bind="args">{{args.content1}}</pc-button>
+         <pc-button v-bind="args">{{args.content2}}</pc-button>
+       </pc-button-group>
+    `),
+  }),
+  play: async ({ canvasElement, args, step }) => {
+    const canvas = within(canvasElement);
+    await step('click btn1', async () => {
+      await userEvent.click(canvas.getByText('Button1'));
+    });
+    await step('click btn2', async () => {
+      await userEvent.click(canvas.getByText('Button2'));
+    });
     expect(args.onClick).toHaveBeenCalled();
   },
 };

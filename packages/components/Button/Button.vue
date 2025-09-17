@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, inject, ref } from 'vue';
 import type { ButtonProps, ButtonEmits, ButtonInstance } from './types';
 import { throttle } from 'lodash-es';
 import PcIcon from '../Icon/Icon.vue';
+import { BUTTON_GROUP_CTX_KEY } from './constants';
 
 defineOptions({
   name: 'PcButton',
@@ -26,6 +27,10 @@ const handleBtnClickThrottle = throttle(
 const iconStyle = computed(() => ({
   marginRight: slots.default ? '6px' : '0px',
 }));
+const ctx = inject(BUTTON_GROUP_CTX_KEY, void 0);
+const size = computed(() => ctx?.size ?? props?.size ?? '');
+const type = computed(() => ctx?.type ?? props?.type ?? '');
+const disabled = computed(() => ctx?.disabled || props?.disabled || false);
 // 向外暴露出的对象,泛型是为了拿到类型提示
 defineExpose<ButtonInstance>({
   ref: _ref,
@@ -48,7 +53,6 @@ defineExpose<ButtonInstance>({
       'is-disabled': disabled,
       'is-loading': loading,
     }"
-    style=""
     @click="(e:MouseEvent)=>{useThrottle?handleBtnClickThrottle(e):handleBtnClick(e)}">
     <template v-if="loading">
       <slot name="loading">
