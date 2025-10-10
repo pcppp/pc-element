@@ -7,7 +7,7 @@
     "dev": "pnpm --filter @pc-element/play dev",
     "docs:dev": "pnpm --filter @pc-element/docs dev",
     "docs:build": "pnpm --filter @pc-element/docs build",
-    "storybook": "pnpm --filter @pc-element/play storybook",
+    "story": "pnpm --filter @pc-element/play storybook",
     "test": "pnpm --filter @pc-element/components test",
     "build": "pnpm --filter pc-element run build"
   },

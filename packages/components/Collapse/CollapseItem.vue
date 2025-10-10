@@ -7,8 +7,12 @@ defineOptions({
   name: 'PcCollapseItem',
 });
 const props = defineProps<CollapseItemProps>();
-const ctx = inject(COLLAPSE_CTX_KEY);
+const ctx = inject(COLLAPSE_CTX_KEY, void 0);
 const isActive = computed(() => ctx?.activeNames.value?.includes(props.name));
+const handleClick = () => {
+  if (props.disabled) return;
+  ctx?.handleItemClick(props.name);
+};
 </script>
 
 <template>
@@ -16,7 +20,8 @@ const isActive = computed(() => ctx?.activeNames.value?.includes(props.name));
     <div
       class="er-collapse-item__header"
       :id="`item-header-${name}`"
-      :class="{ 'is-active': isActive }">
+      :class="{ 'is-active': isActive, 'is-disabled': disabled }"
+      @click="handleClick">
       <span class="er-collapse-item__title">
         <slot name="title">{{ title }}</slot>
       </span>
@@ -31,3 +36,6 @@ const isActive = computed(() => ctx?.activeNames.value?.includes(props.name));
     </transition>
   </div>
 </template>
+<style scoped>
+@import './style.css';
+</style>

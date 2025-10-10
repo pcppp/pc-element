@@ -165,7 +165,7 @@ describe('Collapse.vue', () => {
       `
         [
           [
-            [ErUIError: [ErCollapse] accordion mode should only have one active item],
+            "[ErUIError: [ErCollapse] accordion mode should only have one active item]",
           ],
         ]
       `
