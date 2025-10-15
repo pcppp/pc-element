@@ -2,9 +2,10 @@
 import { handleError, provide, ref, watchEffect, watch } from 'vue';
 import type { CollapseProps, CollapseEmits, CollapseItemName } from './types';
 import { COLLAPSE_CTX_KEY } from './constants';
-
+import { debugWarn } from '@pc-element/utils';
+const COMP_NAME = 'PcCollapse';
 defineOptions({
-  name: 'PcCollapse',
+  name: COMP_NAME,
 });
 const props = defineProps<CollapseProps>();
 const emits = defineEmits<CollapseEmits>();
@@ -33,7 +34,8 @@ const updateActiveNames = (names: CollapseItemName[]) => {
 };
 watchEffect(() => {
   if (props.accordion && activeNames.value.length > 1) {
-    console.warn(
+    debugWarn(
+      COMP_NAME,
       '[ErUIError: [ErCollapse] accordion mode should only have one active item]'
     );
   }

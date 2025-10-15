@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
 import { PcCollapse, PcCollapseItem } from 'pc-element';
-
+import 'pc-element/dist/theme/Collapse.css';
 type Story = StoryObj<typeof PcCollapse>;
 
 const meta: Meta<typeof PcCollapse> = {

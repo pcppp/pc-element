@@ -4,6 +4,11 @@
   <pc-button-group>
     <pc-button type="primary">button</pc-button>
     <pc-button type="primary">button</pc-button>
+    <pc-alert
+      type="info"
+      title="Info"
+      description="This is an info alert"
+      closable />
   </pc-button-group>
 </template>
 

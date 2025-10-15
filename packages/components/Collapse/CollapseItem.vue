@@ -3,6 +3,8 @@ import type { CollapseItemProps, CollapseEmits } from './types';
 import transitionEvents from './transitionEvents';
 import { COLLAPSE_CTX_KEY } from './constants';
 import { computed, inject } from 'vue';
+import PcIcon from '../Icon/Icon.vue';
+
 defineOptions({
   name: 'PcCollapseItem',
 });
@@ -25,7 +27,7 @@ const handleClick = () => {
       <span class="er-collapse-item__title">
         <slot name="title">{{ title }}</slot>
       </span>
-      <er-icon icon="angle-right" class="header-angle" />
+      <pc-icon icon="angle-right" class="header-angle" />
     </div>
     <transition name="slide" v-on="transitionEvents">
       <div class="er-collapse-item__wapper" v-show="isActive">

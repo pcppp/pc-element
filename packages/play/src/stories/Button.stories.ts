@@ -1,5 +1,5 @@
 import type { ArgTypes, Meta, StoryObj } from '@storybook/vue3-vite';
-import 'pc-element/dist/index.css';
+import 'pc-element/dist/theme/Button.css';
 import { fn, within, userEvent, expect } from 'storybook/test';
 import { PcButton, PcButtonGroup } from 'pc-element';
 type Story = StoryObj<typeof PcButton> & { argTypes: ArgTypes };

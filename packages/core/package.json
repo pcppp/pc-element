@@ -18,20 +18,19 @@
     }
   },
   "sideEffects": [
-    "./dist.index.css"
+    "./dist/index.css",
+    "./dist/theme/*.css"
   ],
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "run-s clean build-only move-style",
-    "build-only": "run-p build-es build-umd",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "run-p  build-es build-umd",
+    "build:watch": "run-p  build-es:watch build-umd:watch",
     "build-umd": "vite build --config vite.umd.config.ts",
+    "build-umd:watch": "vite build  --watch --config vite.umd.config.ts",
     "build-es": "vite build --config vite.es.config.ts",
-    "move-style": "move-file dist/es/index.css dist/index.css",
-    "clean": "rimraf dist",
-    "release": "release-it"
+    "build-es:watch": "vite build --watch --config vite.es.config.ts"
   },
   "keywords": [],
   "author": "",
@@ -45,8 +44,11 @@
     "async-validator": "^4.2.5"
   },
   "devDependencies": {
-    "vite-plugin-dts": "^3.9.1",
-    "@pc-element/components": "workspace:*"
+    "@pc-element/components": "workspace:*",
+    "@rollup/plugin-terser": "^0.4.4",
+    "terser": "^5.44.0",
+    "vite-plugin-compression2": "^2.3.0",
+    "vite-plugin-dts": "^3.9.1"
   },
   "peerDependencies": {
     "vue": "^3.5.21"
