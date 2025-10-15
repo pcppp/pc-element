@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { AlertEmits, AlertProps } from './types';
+import type { AlertEmits, AlertInstance, AlertProps } from './types';
 import PcIcon from '../Icon/Icon.vue';
 const COMP_NAME = 'PcAlert';
 import { typeIconMap } from '../../utils';
@@ -10,17 +10,25 @@ defineOptions({
   closable: true,
 });
 const visible = ref(true);
+
+const slots = useSlots();
+const emits = defineEmits<AlertEmits>();
 function close() {
   visible.value = false;
   emits('close');
 }
-const slots = useSlots();
-const emits = defineEmits<AlertEmits>();
+function open() {
+  visible.value = true;
+}
 const props = withDefaults(defineProps<AlertProps>(), { closable: true });
 const iconName = computed(
   () => typeIconMap.get(props.type || 'circle-info') ?? 'circle-info'
 );
 const withDescription = computed(() => props.description || slots.default);
+defineExpose<AlertInstance>({
+  open,
+  close,
+});
 </script>
 <template>
   <div
@@ -49,4 +57,6 @@ const withDescription = computed(() => props.description || slots.default);
   </div>
 </template>
 
-<style scoped lang="less"></style>
+<style scoped>
+@import './style.css';
+</style>
